@@ -1722,10 +1722,10 @@
         </div>
 
         <div class="contact-links reveal d2">
-          <a class="contact-link" href="/cdn-cgi/l/email-protection#fc9e9888948e9999bc9b919d9590d29f9391">
+          <a class="contact-link" href="mailto:will@bdthree.ca">
             <div class="cl-left">
               <p class="cl-key">Email</p>
-              <p class="cl-val"><a href="mailto:will@bdthree.ca">will@bdthree.ca</a></p>
+              <p class="cl-val">will@bdthree.ca</p>
             </div>
             <span class="cl-arrow" aria-hidden="true">↗</span>
           </a>
@@ -1824,9 +1824,9 @@
       const r = crParallaxWrap.getBoundingClientRect();
       const vh = Math.max(window.innerHeight || 0, 1);
       const progress = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
-      const maxShift = 40; // px
+      const maxShift = 90; // px – stronger parallax
       const y = (progress - 0.5) * 2 * maxShift; // -maxShift .. +maxShift
-      crParallaxEl.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0)`;
+      crParallaxEl.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0) scale(1.04)`;
     }
 
     function onScrollParallax() {
