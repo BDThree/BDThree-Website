@@ -1257,6 +1257,7 @@
     }
     .home-nav-card:hover::before { transform: scaleX(1); }
     .hnc-num {
+      display: block;
       font-family: 'Fira Code', monospace;
       font-size: 0.58rem;
       letter-spacing: 0.2em;
@@ -1265,6 +1266,7 @@
       margin-bottom: 16px;
     }
     .hnc-title {
+      display: block;
       font-family: 'Bricolage Grotesque', sans-serif;
       font-size: 1.6rem;
       font-weight: 700;
@@ -1273,6 +1275,7 @@
       margin-bottom: 10px;
     }
     .hnc-desc {
+      display: block;
       font-family: 'Onest', sans-serif;
       font-size: 0.78rem;
       line-height: 1.55;
@@ -1280,6 +1283,7 @@
       flex: 1;
     }
     .hnc-arrow {
+      display: block;
       color: var(--amber);
       font-size: 1.3rem;
       margin-top: 24px;
@@ -1298,6 +1302,12 @@
     }
 
     /* ── edu-strip 4-col ─────────────────────────── */
-    @media (min-width: 961px) {
-      .edu-strip.four-col { grid-template-columns: repeat(4, 1fr); }
+    .edu-strip.four-col {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @media (max-width: 960px) {
+      .edu-strip.four-col { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .edu-strip.four-col { grid-template-columns: 1fr; }
     }
