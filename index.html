@@ -87,6 +87,23 @@
       border-radius: 2px;
     }
 
+    /* ── Skip link (WCAG 2.4.1) ──────────────────── */
+    .skip-link {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 9999;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: rgba(3,5,13,0.92);
+      border: 1px solid var(--rule-warm);
+      color: var(--white);
+      text-decoration: none;
+      transform: translateY(-160%);
+      transition: transform 0.2s ease;
+    }
+    .skip-link:focus-visible { transform: translateY(0); }
+
     /* ── Nav ─────────────────────────────────────── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
@@ -435,7 +452,6 @@
       align-items: start;
       position: relative; z-index: 1;
     }
-    .about-left {}
     .about-headline {
       font-family: 'Bricolage Grotesque', sans-serif;
       font-size: clamp(2.4rem, 4.5vw, 4rem);
@@ -462,7 +478,6 @@
     }
     .amr-val { font-size: 0.8rem; color: var(--muted2); text-align: right; }
 
-    .about-right {}
     .about-body p {
       font-family: 'Onest', sans-serif;
       font-size: 1.05rem; line-height: 1.95;
@@ -1042,7 +1057,6 @@
       text-decoration: none; transition: all 0.3s;
     }
     .contact-link:hover { background: var(--amber-dim); }
-    .cl-left {}
     .cl-key {
       font-family: 'Fira Code', monospace;
       font-size: 0.54rem; letter-spacing: 0.18em;
@@ -1129,7 +1143,6 @@
       .cr-grid { grid-template-columns: 1fr; }
       .edu-strip { grid-template-columns: 1fr; }
       .ai-banner { flex-direction: column; align-items: flex-start; padding: 20px; }
-      .contact-links {}
       footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px; }
       .diagonal-cut, .diagonal-cut-inv,
       .diagonal-back, .diagonal-back-fill { height: 60px; }
@@ -1223,6 +1236,8 @@
 </head>
 <body>
 
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <!-- NAV -->
   <nav id="nav">
     <a href="#hero" class="nav-logo">BD3</a>
@@ -1240,7 +1255,7 @@
   </nav>
 
   <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Mobile menu">
     <div class="mm-top">
       <div class="mm-title">Menu</div>
       <button class="nav-toggle" id="navToggleClose" type="button" aria-label="Close menu" aria-controls="mobileMenu" aria-expanded="true">
@@ -1283,6 +1298,7 @@
     </div>
   </div>
 
+  <main id="main" tabindex="-1">
   <!-- ══ HERO ══ -->
   <section id="hero">
     <div class="hero-grid" aria-hidden="true"></div>
@@ -1732,6 +1748,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <footer>
     <p class="footer-left">© 2026 William Dale · <span>bdthree.ca</span></p>
@@ -1748,13 +1765,31 @@
     const toggle = document.getElementById('navToggle');
     const toggleClose = document.getElementById('navToggleClose');
     const closeMenuLinks = document.querySelectorAll('[data-close-menu]');
+    const main = document.getElementById('main');
+    let lastMenuFocus = null;
+
+    function getMenuFocusable() {
+      if (!menu) return [];
+      return Array.from(menu.querySelectorAll(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )).filter(el => {
+        const style = window.getComputedStyle(el);
+        return style.display !== 'none' && style.visibility !== 'hidden';
+      });
+    }
 
     function openMenu() {
+      lastMenuFocus = document.activeElement;
       document.body.classList.add('menu-open');
       menu.setAttribute('aria-hidden', 'false');
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close menu');
       document.documentElement.style.overflow = 'hidden';
+      main?.setAttribute('aria-hidden', 'true');
+
+      // Move focus into the dialog for keyboard users
+      const focusables = getMenuFocusable();
+      (focusables[0] || toggleClose || menu)?.focus?.();
     }
 
     function closeMenu() {
@@ -1763,13 +1798,51 @@
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open menu');
       document.documentElement.style.overflow = '';
+      main?.removeAttribute('aria-hidden');
+
+      // Restore focus to where the user was
+      if (lastMenuFocus && typeof lastMenuFocus.focus === 'function') lastMenuFocus.focus();
+      lastMenuFocus = null;
     }
 
     toggle?.addEventListener('click', () => (document.body.classList.contains('menu-open') ? closeMenu() : openMenu()));
     toggleClose?.addEventListener('click', closeMenu);
     closeMenuLinks.forEach(a => a.addEventListener('click', closeMenu));
     menu?.addEventListener('click', (e) => { if (e.target === menu) closeMenu(); });
-    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+    window.addEventListener('keydown', (e) => {
+      const isOpen = document.body.classList.contains('menu-open');
+      if (!isOpen) return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeMenu();
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const focusables = getMenuFocusable();
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement;
+
+        if (e.shiftKey && active === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && active === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    // Mark links that open new tabs for assistive tech
+    document.querySelectorAll('a[target="_blank"]').forEach(a => {
+      if (a.hasAttribute('aria-label')) return;
+      const label = (a.textContent || '').replace(/\s+/g, ' ').trim();
+      if (!label) return;
+      a.setAttribute('aria-label', `${label} (opens in a new tab)`);
+    });
 
     // ── Parallax (scroll-driven, no heavy libs)
     const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
