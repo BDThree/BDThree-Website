@@ -184,3 +184,56 @@
     window.addEventListener('load', () => {
       counterEls.forEach(el => animateCounter(el));
     }, { once: true });
+
+    // ── Rotating parallax slideshow ───────────────
+    const slideData = [
+      { title: 'Almost Golden',       sub: 'William J. Dale III · 2026 · Album'   },
+      { title: 'AIn\'t Love Grand',   sub: 'William J. Dale III · 2026 · Album'   },
+      { title: 'AIn\'t Christmas Grand', sub: 'William J. Dale III · 2025 · Album' },
+      { title: 'Steady Hands',        sub: 'William J. Dale III · 2026 · Single'  },
+      { title: 'Here\'s To You',      sub: 'William J. Dale III · 2025 · Single'  },
+    ];
+
+    const parallaxWrap = document.getElementById('crParallaxWrap');
+    if (parallaxWrap) {
+      const slides = Array.from(parallaxWrap.querySelectorAll('.cr-slide'));
+      const dots   = Array.from(parallaxWrap.querySelectorAll('.cr-dot'));
+      const titleEl  = document.getElementById('crSlideTitle');
+      const subEl    = document.getElementById('crSlideSub');
+      let current = 0;
+      let rotateTimer = null;
+
+      function goToSlide(idx) {
+        slides[current].classList.remove('cr-slide--active');
+        dots[current].classList.remove('cr-dot--active');
+        current = idx;
+        slides[current].classList.add('cr-slide--active');
+        dots[current].classList.add('cr-dot--active');
+        if (titleEl) titleEl.textContent = slideData[current].title;
+        if (subEl)   subEl.textContent   = slideData[current].sub;
+      }
+
+      function startRotation() {
+        rotateTimer = setInterval(() => {
+          goToSlide((current + 1) % slides.length);
+        }, 5000);
+      }
+
+      function stopRotation() {
+        clearInterval(rotateTimer);
+        rotateTimer = null;
+      }
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          stopRotation();
+          goToSlide(i);
+          startRotation();
+        });
+      });
+
+      parallaxWrap.addEventListener('mouseenter', stopRotation);
+      parallaxWrap.addEventListener('mouseleave', startRotation);
+
+      startRotation();
+    }

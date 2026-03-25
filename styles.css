@@ -1173,10 +1173,142 @@
       box-shadow: 0 4px 16px rgba(26,20,16,0.2);
       margin-bottom: 14px; display: block;
     }
+
+    /* ── Rotating parallax slides ────────────────── */
+    .cr-slide {
+      position: absolute;
+      inset: -25% 0;
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+      will-change: opacity;
+    }
+    .cr-slide.cr-slide--active { opacity: 1; }
+
+    /* ── Dot indicators ──────────────────────────── */
+    .cr-dots {
+      position: absolute;
+      bottom: 20px; right: 56px;
+      z-index: 3;
+      display: flex; gap: 8px; align-items: center;
+    }
+    .cr-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.35);
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .cr-dot.cr-dot--active {
+      background: var(--amber2);
+      transform: scale(1.3);
+    }
+
+    /* ── Release cards (albums & singles) ────────── */
+    .releases-section { margin-top: 72px; }
+    .releases-heading {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.65rem; letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted); margin-bottom: 28px;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 12px;
+    }
+    .albums-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .singles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .release-card {
+      background: var(--black2);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 20px;
+      display: flex; flex-direction: column;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .release-card:hover {
+      border-color: var(--amber2);
+      transform: translateY(-3px);
+    }
+    .release-art {
+      width: 100%; aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .release-type-badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.58rem; letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      padding: 3px 8px;
+      margin-bottom: 10px;
+      align-self: flex-start;
+    }
+    .release-type-badge--album {
+      background: rgba(232,160,32,0.15);
+      color: var(--amber2);
+      border: 1px solid rgba(232,160,32,0.3);
+    }
+    .release-type-badge--single {
+      background: rgba(139,198,191,0.12);
+      color: #8bc6bf;
+      border: 1px solid rgba(139,198,191,0.25);
+    }
+    .release-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--white); margin-bottom: 4px;
+      letter-spacing: -0.02em;
+    }
+    .release-meta {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.65rem; color: var(--muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+    .release-links {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: auto;
+    }
+    .release-link {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.62rem; letter-spacing: 0.06em;
+      color: var(--amber2);
+      text-decoration: none;
+      border: 1px solid rgba(232,160,32,0.3);
+      border-radius: 2px;
+      padding: 4px 10px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .release-link:hover {
+      background: var(--amber2);
+      color: var(--black);
+    }
+
+    @media (max-width: 960px) {
+      .albums-grid { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 600px) {
       .cr-parallax-wrap { height: 52vh; min-height: 300px; }
       .cr-parallax-content { bottom: 28px; left: 20px; }
       .cr-parallax-title { font-size: clamp(2rem, 10vw, 2.8rem); }
+      .cr-dots { right: 20px; }
+      .albums-grid { grid-template-columns: 1fr; }
+      .singles-grid { grid-template-columns: 1fr; }
     }
 
     /* ── Active page nav indicator ───────────────── */
@@ -1193,121 +1325,15 @@
 
     /* ── Inner-page section top spacing ─────────── */
     /* Ensures first section on standalone pages clears the fixed nav */
-    #about, #experience, #contact, #creative {
+    #about, #experience, #contact {
       padding-top: 140px;
     }
-    @media (max-width: 960px) {
-      #about, #experience, #contact, #creative { padding-top: 96px; }
-    }
-    @media (max-width: 600px) {
-      #about, #experience, #contact, #creative { padding-top: 80px; }
-    }
-
-    /* ── Nav logo home clarity ───────────────────── */
-    .nav-logo-home {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.48rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      display: block;
-      margin-top: 2px;
-      transition: color 0.25s;
-    }
-    .nav-logo:hover .nav-logo-home { color: var(--amber); }
-
-    /* ── Home nav cards ──────────────────────────── */
-    .home-nav {
-      background: var(--black2);
-      border-top: 1px solid var(--rule);
-      padding: 80px 0 100px;
-    }
-    .home-nav-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-    .home-nav-card {
-      display: flex;
-      flex-direction: column;
-      padding: 32px 28px;
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      background: rgba(7,10,20,0.5);
-      text-decoration: none;
-      color: var(--white);
-      position: relative;
-      overflow: hidden;
-      transition: background 0.3s, border-color 0.3s, transform 0.3s cubic-bezier(0.23,1,0.32,1);
-    }
-    .home-nav-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--amber), transparent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
-    }
-    .home-nav-card:hover {
-      background: rgba(232,160,32,0.06);
-      border-color: var(--rule-warm);
-      transform: translateY(-3px);
-    }
-    .home-nav-card:hover::before { transform: scaleX(1); }
-    .hnc-num {
-      display: block;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 16px;
-    }
-    .hnc-title {
-      display: block;
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-    .hnc-desc {
-      display: block;
-      font-family: 'Onest', sans-serif;
-      font-size: 0.78rem;
-      line-height: 1.55;
-      color: rgba(248,244,237,0.5);
-      flex: 1;
-    }
-    .hnc-arrow {
-      display: block;
-      color: var(--amber);
-      font-size: 1.3rem;
-      margin-top: 24px;
-      align-self: flex-end;
-      transition: transform 0.25s cubic-bezier(0.23,1,0.32,1);
-    }
-    .home-nav-card:hover .hnc-arrow { transform: translate(3px, -3px); }
-    @media (max-width: 960px) {
-      .home-nav-grid { grid-template-columns: 1fr 1fr; }
-      .home-nav { padding: 60px 0 80px; }
-    }
-    @media (max-width: 600px) {
-      .home-nav-grid { grid-template-columns: 1fr; }
-      .home-nav { padding: 48px 0 64px; }
-      .home-nav-card { padding: 24px 20px; }
-    }
-
-    /* ── edu-strip 4-col ─────────────────────────── */
-    .edu-strip.four-col {
-      grid-template-columns: repeat(4, 1fr);
+    #creative {
+      padding-top: 0; /* parallax banner handles spacing */
     }
     @media (max-width: 960px) {
-      .edu-strip.four-col { grid-template-columns: 1fr 1fr; }
+      #about, #experience, #contact { padding-top: 96px; }
     }
     @media (max-width: 600px) {
-      .edu-strip.four-col { grid-template-columns: 1fr; }
+      #about, #experience, #contact { padding-top: 80px; }
     }
