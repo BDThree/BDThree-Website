@@ -816,7 +816,8 @@
       position: relative;
       overflow: hidden;
     }
-    #creative .container { padding-top: 80px; }
+    .cr-intro-wrap { padding-top: 140px; padding-bottom: 56px; }
+    #creative .container { padding-top: 64px; }
 
     /* Ink-wash background accent */
     .cr-ink {
@@ -1095,6 +1096,7 @@
       .diagonal-cut-inv { margin-top: -60px; }
       .diagonal-back-fill { margin-top: -60px; }
       #creative .container { padding-top: 48px; }
+      .cr-intro-wrap { padding-top: 96px; padding-bottom: 40px; }
     }
 
     /* ── Reduced Motion ──────────────────────────── */
@@ -1106,6 +1108,7 @@
       }
       .reveal, .reveal.js-ready { opacity: 1 !important; transform: none !important; }
       #crParallax { transform: none !important; }
+      .cr-slide, .cr-slide.cr-slide--active { animation: none !important; transform: none !important; }
       .hero-name, .hero-signal, .hero-role,
       .hero-stats { opacity: 1 !important; animation: none !important; }
       .ticker-inner { animation: none !important; }
@@ -1177,15 +1180,22 @@
     /* ── Rotating parallax slides ────────────────── */
     .cr-slide {
       position: absolute;
-      inset: -25% 0;
+      top: -20%; left: 0; right: 0; bottom: -20%;
       background-size: cover;
-      background-position: center 30%;
+      background-position: center 40%;
       background-repeat: no-repeat;
       opacity: 0;
-      transition: opacity 1.2s ease-in-out;
-      will-change: opacity;
+      transition: opacity 1s ease-in-out;
+      will-change: opacity, transform;
     }
-    .cr-slide.cr-slide--active { opacity: 1; }
+    .cr-slide.cr-slide--active {
+      opacity: 1;
+      animation: cr-kenburns 6s ease-out forwards;
+    }
+    @keyframes cr-kenburns {
+      from { transform: scale(1.06) translate(1.5%, 0.5%); }
+      to   { transform: scale(1.0)  translate(0, 0); }
+    }
 
     /* ── Dot indicators ──────────────────────────── */
     .cr-dots {

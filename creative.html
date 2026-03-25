@@ -40,7 +40,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Onest:wght@300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
 
@@ -109,31 +109,10 @@
   <main id="main" tabindex="-1">
   <section id="creative">
 
-    <!-- ROTATING PARALLAX -->
-    <div class="cr-parallax-wrap" id="crParallaxWrap">
-      <div class="cr-slide cr-slide--active" style="background-image: url('images/almost-golden.jpg');"></div>
-      <div class="cr-slide" style="background-image: url('images/aint-love-grand.jpg');"></div>
-      <div class="cr-slide" style="background-image: url('images/aint-christmas-grand.jpg');"></div>
-      <div class="cr-slide" style="background-image: url('images/steady-hands.jpg');"></div>
-      <div class="cr-slide" style="background-image: url('images/heres-to-you.jpg');"></div>
-      <div class="cr-parallax-overlay" aria-hidden="true"></div>
-      <div class="cr-parallax-content">
-        <p class="cr-parallax-eyebrow" id="crSlideEyebrow">03 · Creative Practice</p>
-        <h2 class="cr-parallax-title" id="crSlideTitle">Almost Golden</h2>
-        <p class="cr-parallax-sub" id="crSlideSub">William J. Dale III · 2026 · Album</p>
-      </div>
-      <div class="cr-dots" aria-hidden="true">
-        <button class="cr-dot cr-dot--active" data-slide="0" aria-label="Slide 1"></button>
-        <button class="cr-dot" data-slide="1" aria-label="Slide 2"></button>
-        <button class="cr-dot" data-slide="2" aria-label="Slide 3"></button>
-        <button class="cr-dot" data-slide="3" aria-label="Slide 4"></button>
-        <button class="cr-dot" data-slide="4" aria-label="Slide 5"></button>
-      </div>
-    </div>
+    <!-- INTRO — nav clearance + headline + text -->
+    <div class="container cr-intro-wrap">
 
-    <div class="container">
-
-      <div class="cr-header reveal" style="padding-top:72px;">
+      <div class="cr-header reveal">
         <div>
           <p class="cr-kicker">03 · Creative Practice</p>
           <h2 class="cr-headline">
@@ -159,7 +138,31 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.996 0C5.375 0 0 5.375 0 11.996 0 18.617 5.375 24 11.996 24 18.617 24 24 18.617 24 11.996 24 5.375 18.617 0 11.996 0zm4.26 6.35a.5.5 0 0 1 .501.5v10.302a.5.5 0 0 1-.5.5H7.743a.5.5 0 0 1-.5-.5V6.85a.5.5 0 0 1 .5-.5h8.514zM9.5 9.5v5l4-2.5-4-2.5z"/></svg>
           Amazon Music
         </a>
+    </div><!-- /cr-intro-wrap -->
+
+    <!-- ROTATING PARALLAX — mid-page, full-bleed -->
+    <div class="cr-parallax-wrap" id="crParallaxWrap">
+      <div class="cr-slide cr-slide--active" style="background-image: url('images/almost-golden.jpg');"></div>
+      <div class="cr-slide" style="background-image: url('images/aint-love-grand.jpg');"></div>
+      <div class="cr-slide" style="background-image: url('images/aint-christmas-grand.jpg');"></div>
+      <div class="cr-slide" style="background-image: url('images/steady-hands.jpg');"></div>
+      <div class="cr-slide" style="background-image: url('images/heres-to-you.jpg');"></div>
+      <div class="cr-parallax-overlay" aria-hidden="true"></div>
+      <div class="cr-parallax-content">
+        <p class="cr-parallax-eyebrow" id="crSlideEyebrow">03 · Creative Practice</p>
+        <h2 class="cr-parallax-title" id="crSlideTitle">Almost Golden</h2>
+        <p class="cr-parallax-sub" id="crSlideSub">William J. Dale III · 2026 · Album</p>
       </div>
+      <div class="cr-dots" aria-hidden="true">
+        <button class="cr-dot cr-dot--active" data-slide="0" aria-label="Slide 1"></button>
+        <button class="cr-dot" data-slide="1" aria-label="Slide 2"></button>
+        <button class="cr-dot" data-slide="2" aria-label="Slide 3"></button>
+        <button class="cr-dot" data-slide="3" aria-label="Slide 4"></button>
+        <button class="cr-dot" data-slide="4" aria-label="Slide 5"></button>
+      </div>
+    </div>
+
+    <div class="container">
 
       <!-- ALBUMS -->
       <div class="releases-section reveal d2">

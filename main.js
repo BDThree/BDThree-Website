@@ -207,6 +207,9 @@
         slides[current].classList.remove('cr-slide--active');
         dots[current].classList.remove('cr-dot--active');
         current = idx;
+        // Force animation restart so Ken Burns plays fresh each slide
+        slides[current].classList.remove('cr-slide--active');
+        void slides[current].offsetWidth; // reflow
         slides[current].classList.add('cr-slide--active');
         dots[current].classList.add('cr-dot--active');
         if (titleEl) titleEl.textContent = slideData[current].title;
