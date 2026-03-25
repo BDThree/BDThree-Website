@@ -1321,6 +1321,113 @@
       .singles-grid { grid-template-columns: 1fr; }
     }
 
+    /* ── Nav logo home clarity ───────────────────── */
+    .nav-logo-home {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.48rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-top: 2px;
+      transition: color 0.25s;
+    }
+    .nav-logo:hover .nav-logo-home { color: var(--amber); }
+
+    /* ── Home nav cards ──────────────────────────── */
+    .home-nav {
+      background: var(--black2);
+      border-top: 1px solid var(--rule);
+      padding: 80px 0 100px;
+    }
+    .home-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .home-nav-card {
+      display: flex;
+      flex-direction: column;
+      padding: 32px 28px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: rgba(7,10,20,0.5);
+      text-decoration: none;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s cubic-bezier(0.23,1,0.32,1);
+    }
+    .home-nav-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--amber), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+    }
+    .home-nav-card:hover {
+      background: rgba(232,160,32,0.06);
+      border-color: var(--rule-warm);
+      transform: translateY(-3px);
+    }
+    .home-nav-card:hover::before { transform: scaleX(1); }
+    .hnc-num {
+      display: block;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 16px;
+    }
+    .hnc-title {
+      display: block;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .hnc-desc {
+      display: block;
+      font-family: 'Onest', sans-serif;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      color: rgba(248,244,237,0.5);
+      flex: 1;
+    }
+    .hnc-arrow {
+      display: block;
+      color: var(--amber);
+      font-size: 1.3rem;
+      margin-top: 24px;
+      align-self: flex-end;
+      transition: transform 0.25s cubic-bezier(0.23,1,0.32,1);
+    }
+    .home-nav-card:hover .hnc-arrow { transform: translate(3px, -3px); }
+    @media (max-width: 960px) {
+      .home-nav-grid { grid-template-columns: 1fr 1fr; }
+      .home-nav { padding: 60px 0 80px; }
+    }
+    @media (max-width: 600px) {
+      .home-nav-grid { grid-template-columns: 1fr; }
+      .home-nav { padding: 48px 0 64px; }
+      .home-nav-card { padding: 24px 20px; }
+    }
+
+    /* ── edu-strip 4-col ─────────────────────────── */
+    .edu-strip.four-col { grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 960px) {
+      .edu-strip.four-col { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .edu-strip.four-col { grid-template-columns: 1fr; }
+    }
+
     /* ── Active page nav indicator ───────────────── */
     .nav-links a[aria-current="page"] {
       color: var(--white);
@@ -1334,12 +1441,11 @@
     }
 
     /* ── Inner-page section top spacing ─────────── */
-    /* Ensures first section on standalone pages clears the fixed nav */
     #about, #experience, #contact {
       padding-top: 140px;
     }
     #creative {
-      padding-top: 0; /* parallax banner handles spacing */
+      padding-top: 0;
     }
     @media (max-width: 960px) {
       #about, #experience, #contact { padding-top: 96px; }
