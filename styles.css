@@ -423,6 +423,8 @@
       flex-shrink: 0;
     }
     .amr-val { font-size: 0.8rem; color: var(--muted2); text-align: right; }
+    .amr-val a { color: var(--amber); text-decoration: none; }
+    .amr-val a:hover { text-decoration: underline; }
 
     .about-body p {
       font-family: 'Onest', sans-serif;
