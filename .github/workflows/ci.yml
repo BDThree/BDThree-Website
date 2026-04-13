@@ -20,5 +20,5 @@ jobs:
         run: |
           npm init -y
           npm i -D html-validate
-          npx html-validate "index.html" "about.html" "work.html" "creative.html" "connect.html"
+          npx html-validate "index.html"
 

@@ -1,3 +1,26 @@
+    // ── Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+      const html = document.documentElement;
+      function updateThemeUI(theme) {
+        themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+      updateThemeUI(html.getAttribute('data-theme') || 'dark');
+      themeToggle.addEventListener('click', () => {
+        const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        updateThemeUI(next);
+      });
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) {
+          const theme = e.matches ? 'dark' : 'light';
+          html.setAttribute('data-theme', theme);
+          updateThemeUI(theme);
+        }
+      });
+    }
+
     // ── Nav scroll
     const nav = document.getElementById('nav');
     const hasHero = !!document.querySelector('#hero');
